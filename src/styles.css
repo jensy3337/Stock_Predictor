@@ -1,0 +1,33 @@
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Inter, system-ui, sans-serif; background: #030712; color: #e5e7eb; }
+.app { padding: 12px; }
+.header { position: sticky; top: 0; z-index: 20; background: #111827; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; padding: 8px; border-radius: 10px; }
+button { background: #1f2937; color: #e5e7eb; border: 1px solid #374151; border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+input, select { background: #0f172a; color: #e5e7eb; border: 1px solid #334155; border-radius: 8px; padding: 6px; }
+.badge { padding: 4px 8px; border-radius: 999px; font-size: 12px; }
+.open { background: #065f46; }
+.closed { background: #7f1d1d; }
+.warn { margin: 8px 0; color: #fbbf24; }
+.chips { display: flex; gap: 8px; overflow-x: auto; margin: 10px 0; }
+.chips .active { outline: 2px solid #60a5fa; }
+.grid.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+article, section, aside > section, .sentiment { background: #111827; border: 1px solid #1f2937; border-radius: 10px; padding: 10px; }
+.layout { display: grid; grid-template-columns: 2fr 1fr; gap: 10px; margin-top: 10px; align-items: start; }
+.chart .tf { display: flex; gap: 6px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
+.ohlc { margin-top: 8px; color: #93c5fd; }
+.pos { color: #34d399; }
+.neg { color: #f87171; }
+.row { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-bottom: 1px solid #1f2937; }
+.heat { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.heat > div { padding: 10px; border-radius: 8px; text-align: center; min-height: 74px; }
+.sentiment { display: flex; align-items: center; justify-content: center; font-weight: 700; }
+.sentiment.bullish { color: #34d399; }
+.sentiment.neutral { color: #fbbf24; }
+.sentiment.bearish { color: #f87171; }
+.news { margin-top: 10px; display: grid; gap: 8px; }
+.news a { color: #c7d2fe; text-decoration: none; }
+.dropdown { position: absolute; top: 56px; right: 12px; width: min(360px, 95vw); background: #0b1220; border: 1px solid #334155; border-radius: 8px; overflow: hidden; }
+.dropdown > div { padding: 8px; border-bottom: 1px solid #1e293b; cursor: pointer; }
+.education details { margin-bottom: 8px; background: #111827; padding: 8px; border-radius: 8px; }
+@media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
