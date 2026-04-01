@@ -7,9 +7,8 @@ def fetch_data():
     stock = yf.Ticker("RELIANCE.NS")
     hist = stock.history(period='3mo')
 
-    # convert to lists for JS
     dates = hist.index.strftime('%Y-%m-%d').tolist()
-    prices = hist['Close'].tolist()
+    prices = hist['Close'].round(2).tolist()
 
     return dates, prices
 
