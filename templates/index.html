@@ -1,77 +1,98 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Stock Insight</title>
+    <title>PredictX</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #050816, #0a0f1c);
-            color: #e6f0ff;
+            background: radial-gradient(circle at top, #0b1120, #020617);
+            color: #e2e8f0;
         }
 
+        /* NAVBAR */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 30px;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #1e293b;
+        }
+
+        .logo {
+            font-size: 20px;
+            color: #38bdf8;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            color: #94a3b8;
+        }
+
+        /* MAIN */
         .container {
-            width: 85%;
-            margin: 40px auto;
-            text-align: center;
+            width: 90%;
+            margin: auto;
+            padding: 30px 0;
         }
 
         h1 {
-            font-size: 32px;
-            color: #4da6ff;
-            margin-bottom: 20px;
+            font-size: 40px;
+            margin-bottom: 10px;
         }
 
-        .glass {
-            background: rgba(17, 24, 39, 0.6);
-            backdrop-filter: blur(12px);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 0 25px rgba(77,166,255,0.15);
+        /* GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
         }
 
-        select, button {
-            padding: 10px 15px;
-            margin: 10px;
-            border-radius: 8px;
-            border: none;
-            background: #1e293b;
-            color: white;
-        }
-
-        button {
-            background: #4da6ff;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #3399ff;
-        }
-
-        canvas {
-            margin-top: 20px;
-        }
-
-        .cards {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-            gap: 15px;
-        }
-
+        /* CARD */
         .card {
-            flex: 1;
-            padding: 15px;
-            border-radius: 12px;
-            background: rgba(17, 24, 39, 0.7);
-            box-shadow: 0 0 15px rgba(77,166,255,0.1);
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(56,189,248,0.1);
+            transition: 0.3s;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            transition: 0.3s;
+        }
+
+        .title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #38bdf8;
+        }
+
+        /* STOCK LIST */
+        .stock {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+        }
+
+        /* CHART */
+        canvas {
+            background: #020617;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        /* SELECT */
+        select, button {
+            padding: 10px;
+            margin-top: 10px;
+            background: #1e293b;
+            color: white;
+            border: none;
         }
 
     </style>
@@ -79,11 +100,51 @@
 
 <body>
 
+<div class="navbar">
+    <div class="logo">PredictX</div>
+    <div class="nav-links">
+        <div>Markets</div>
+        <div>Predictions</div>
+    </div>
+</div>
+
 <div class="container">
 
-    <h1>Stock Market Insight</h1>
+    <h1>Market Overview</h1>
 
-    <div class="glass">
+    <div class="grid">
+
+        <!-- NIFTY -->
+        <div class="card">
+            <div class="title">NIFTY50</div>
+
+            <div class="stock">Reliance <span>₹3,290</span></div>
+            <div class="stock">TCS <span>₹4,163</span></div>
+            <div class="stock">HDFC <span>₹1,739</span></div>
+        </div>
+
+        <!-- SENSEX -->
+        <div class="card">
+            <div class="title">SENSEX</div>
+
+            <div class="stock">Infosys <span>₹1,717</span></div>
+            <div class="stock">Wipro <span>₹523</span></div>
+            <div class="stock">Bajaj <span>₹7,984</span></div>
+        </div>
+
+        <!-- BANK -->
+        <div class="card">
+            <div class="title">NIFTY BANK</div>
+
+            <div class="stock">ICICI <span>₹1,270</span></div>
+            <div class="stock">Kotak <span>₹2,171</span></div>
+            <div class="stock">Axis <span>₹1,191</span></div>
+        </div>
+
+    </div>
+
+    <!-- ANALYSIS -->
+    <div class="card" style="margin-top:30px;">
 
         <form method="POST">
             <select name="stock">
@@ -101,28 +162,6 @@
 
     </div>
 
-    <div class="cards">
-        <div class="card">
-            <b>Stock</b><br>
-            Ownership in a company
-        </div>
-
-        <div class="card">
-            <b>Index</b><br>
-            Market performance indicator
-        </div>
-
-        <div class="card">
-            <b>Bull</b><br>
-            Rising market
-        </div>
-
-        <div class="card">
-            <b>Bear</b><br>
-            Falling market
-        </div>
-    </div>
-
 </div>
 
 <script>
@@ -136,25 +175,10 @@
             datasets: [{
                 label: "Price",
                 data: data,
-                borderColor: "#4da6ff",
-                backgroundColor: "rgba(77,166,255,0.2)",
+                borderColor: "#38bdf8",
                 tension: 0.4,
-                fill: true,
-                pointRadius: 2
+                fill: false
             }]
-        },
-        options: {
-            plugins: {
-                legend: {
-                    labels: {
-                        color: "#fff"
-                    }
-                }
-            },
-            scales: {
-                x: { ticks: { color: "#aaa" } },
-                y: { ticks: { color: "#aaa" } }
-            }
         }
     });
 </script>
