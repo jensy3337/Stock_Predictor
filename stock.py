@@ -4,12 +4,12 @@ import os
 
 app = Flask(__name__)
 
-# Assets list
+# Assets (Indian + commodities)
 ASSETS = {
     "Reliance": "RELIANCE.NS",
     "TCS": "TCS.NS",
-    "HDFC Bank": "HDFCBANK.NS",
     "Infosys": "INFY.NS",
+    "HDFC Bank": "HDFCBANK.NS",
     "NIFTY 50": "^NSEI",
     "SENSEX": "^BSESN",
     "Gold": "GC=F",
@@ -19,16 +19,16 @@ ASSETS = {
 
 def fetch_data(symbol):
     stock = yf.Ticker(symbol)
-    hist = stock.history(period='3mo')
+    hist = stock.history(period="3mo")
 
     dates = hist.index.strftime('%Y-%m-%d').tolist()
     prices = hist['Close'].round(2).tolist()
 
     return dates, prices
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route("/", methods=["GET", "POST"])
 def home():
-    selected = "Reliance"
+    selected = "NIFTY 50"
 
     if request.method == "POST":
         selected = request.form.get("stock")
@@ -37,12 +37,12 @@ def home():
     dates, prices = fetch_data(symbol)
 
     return render_template(
-        'index.html',
-        dates=dates,
-        prices=prices,
+        "index.html",
         stocks=ASSETS.keys(),
-        selected=selected
+        selected=selected,
+        dates=dates,
+        prices=prices
     )
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
