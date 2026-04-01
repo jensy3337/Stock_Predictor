@@ -1,106 +1,89 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Stock Market Insight</title>
+    <title>Stock Insight</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
-            background: #0a0f1c;
+            background: linear-gradient(135deg, #050816, #0a0f1c);
             color: #e6f0ff;
         }
 
-        header {
-            background: #0f172a;
-            padding: 20px;
+        .container {
+            width: 85%;
+            margin: 40px auto;
             text-align: center;
-            font-size: 26px;
-            font-weight: bold;
+        }
+
+        h1 {
+            font-size: 32px;
             color: #4da6ff;
-            border-bottom: 1px solid #1e293b;
+            margin-bottom: 20px;
         }
 
-        .main {
-            display: flex;
-        }
-
-        .sidebar {
-            width: 220px;
-            background: #111827;
+        .glass {
+            background: rgba(17, 24, 39, 0.6);
+            backdrop-filter: blur(12px);
             padding: 20px;
-            height: 100vh;
-        }
-
-        .sidebar h3 {
-            color: #4da6ff;
-        }
-
-        .sidebar p {
-            margin: 10px 0;
-            cursor: pointer;
-        }
-
-        .content {
-            flex: 1;
-            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(77,166,255,0.15);
         }
 
         select, button {
-            padding: 10px;
-            margin: 10px 5px;
+            padding: 10px 15px;
+            margin: 10px;
+            border-radius: 8px;
+            border: none;
             background: #1e293b;
             color: white;
-            border: 1px solid #4da6ff;
+        }
+
+        button {
+            background: #4da6ff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #3399ff;
         }
 
         canvas {
-            background: #111827;
-            border-radius: 12px;
-            padding: 10px;
+            margin-top: 20px;
         }
 
         .cards {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
             gap: 15px;
-            margin-top: 25px;
         }
 
         .card {
-            background: #111827;
+            flex: 1;
             padding: 15px;
-            border-left: 4px solid #4da6ff;
-            border-radius: 8px;
+            border-radius: 12px;
+            background: rgba(17, 24, 39, 0.7);
+            box-shadow: 0 0 15px rgba(77,166,255,0.1);
         }
 
-        footer {
-            text-align: center;
-            padding: 15px;
-            background: #0f172a;
-            margin-top: 30px;
+        .card:hover {
+            transform: translateY(-5px);
+            transition: 0.3s;
         }
+
     </style>
 </head>
 
 <body>
 
-<header>Stock Market Insight</header>
+<div class="container">
 
-<div class="main">
+    <h1>Stock Market Insight</h1>
 
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-        <h3>Menu</h3>
-        <p>Dashboard</p>
-        <p>Stocks</p>
-        <p>Commodities</p>
-        <p>Learn</p>
-    </div>
-
-    <!-- CONTENT -->
-    <div class="content">
+    <div class="glass">
 
         <form method="POST">
             <select name="stock">
@@ -110,38 +93,37 @@
                     </option>
                 {% endfor %}
             </select>
+
             <button type="submit">Analyze</button>
         </form>
 
         <canvas id="chart"></canvas>
 
-        <div class="cards">
-            <div class="card">
-                <b>Stock</b><br>
-                Ownership in a company.
-            </div>
+    </div>
 
-            <div class="card">
-                <b>Index</b><br>
-                Represents market performance.
-            </div>
-
-            <div class="card">
-                <b>Bull Market</b><br>
-                Rising market condition.
-            </div>
-
-            <div class="card">
-                <b>Bear Market</b><br>
-                Falling market condition.
-            </div>
+    <div class="cards">
+        <div class="card">
+            <b>Stock</b><br>
+            Ownership in a company
         </div>
 
+        <div class="card">
+            <b>Index</b><br>
+            Market performance indicator
+        </div>
+
+        <div class="card">
+            <b>Bull</b><br>
+            Rising market
+        </div>
+
+        <div class="card">
+            <b>Bear</b><br>
+            Falling market
+        </div>
     </div>
 
 </div>
-
-<footer>Indian Market Dashboard</footer>
 
 <script>
     const labels = {{ dates | tojson }};
@@ -156,12 +138,23 @@
                 data: data,
                 borderColor: "#4da6ff",
                 backgroundColor: "rgba(77,166,255,0.2)",
-                tension: 0.3,
-                fill: true
+                tension: 0.4,
+                fill: true,
+                pointRadius: 2
             }]
         },
         options: {
-            responsive: true
+            plugins: {
+                legend: {
+                    labels: {
+                        color: "#fff"
+                    }
+                }
+            },
+            scales: {
+                x: { ticks: { color: "#aaa" } },
+                y: { ticks: { color: "#aaa" } }
+            }
         }
     });
 </script>
