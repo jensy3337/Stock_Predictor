@@ -24,18 +24,25 @@
                     label: 'Stock Price ₹',
                     data: data,
                     borderWidth: 2,
-                    tension: 0.3
+                    tension: 0.3,
+                    pointRadius: 3,
+                    pointHoverRadius: 6
                 }]
             },
             options: {
                 responsive: true,
                 interaction: {
-                    mode: 'index',
+                    mode: 'nearest',
                     intersect: false
                 },
                 plugins: {
                     tooltip: {
-                        enabled: true
+                        enabled: true,
+                        callbacks: {
+                            label: function(context) {
+                                return `₹ ${context.raw}`;
+                            }
+                        }
                     }
                 },
                 scales: {
