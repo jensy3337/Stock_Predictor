@@ -1,14 +1,95 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Stock Chart</title>
+    <title>Stock Analysis</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            background-color: #0b0f1a;
+            color: #e0e6ed;
+            font-family: Arial;
+            text-align: center;
+        }
+
+        h1 {
+            color: #4da6ff;
+        }
+
+        select, button {
+            padding: 10px;
+            margin: 10px;
+            background: #1a2238;
+            color: white;
+            border: 1px solid #4da6ff;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+
+        canvas {
+            background: #111827;
+            border-radius: 10px;
+        }
+
+        .learn {
+            margin-top: 40px;
+            text-align: left;
+        }
+
+        .card {
+            background: #111827;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #4da6ff;
+        }
+    </style>
 </head>
-<body style="text-align:center; font-family:sans-serif;">
 
-    <h1>Reliance Stock</h1>
+<body>
 
-    <canvas id="chart" width="800" height="400"></canvas>
+    <h1>Stock Market Analysis</h1>
+
+    <form method="POST">
+        <select name="stock">
+            {% for s in stocks %}
+                <option value="{{ s }}" {% if s == selected %}selected{% endif %}>
+                    {{ s }}
+                </option>
+            {% endfor %}
+        </select>
+        <button type="submit">Analyze</button>
+    </form>
+
+    <div class="container">
+        <canvas id="chart"></canvas>
+    </div>
+
+    <div class="learn container">
+        <h2>Learn Stock Market</h2>
+
+        <div class="card">
+            <b>Stock</b>: A share in the ownership of a company.
+        </div>
+
+        <div class="card">
+            <b>Index</b>: A group of stocks representing market performance (e.g., NIFTY 50).
+        </div>
+
+        <div class="card">
+            <b>Bull Market</b>: Market is rising.
+        </div>
+
+        <div class="card">
+            <b>Bear Market</b>: Market is falling.
+        </div>
+
+        <div class="card">
+            <b>Volume</b>: Number of shares traded.
+        </div>
+    </div>
 
     <script>
         const labels = {{ dates | tojson }};
@@ -21,42 +102,18 @@
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Stock Price ₹',
+                    label: 'Price',
                     data: data,
-                    borderWidth: 2,
-                    tension: 0.3,
-                    pointRadius: 3,
-                    pointHoverRadius: 6
+                    borderColor: '#4da6ff',
+                    backgroundColor: 'rgba(77,166,255,0.2)',
+                    tension: 0.3
                 }]
             },
             options: {
                 responsive: true,
-                interaction: {
-                    mode: 'nearest',
-                    intersect: false
-                },
                 plugins: {
                     tooltip: {
-                        enabled: true,
-                        callbacks: {
-                            label: function(context) {
-                                return `₹ ${context.raw}`;
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Date'
-                        }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Price (₹)'
-                        }
+                        enabled: true
                     }
                 }
             }
