@@ -1,56 +1,72 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Stock Analysis</title>
+    <title>Stock Market Insight</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         body {
-            background-color: #0b0f1a;
-            color: #e0e6ed;
+            margin: 0;
+            background: #0a0f1c;
+            color: #e6f0ff;
             font-family: Arial;
-            text-align: center;
         }
 
-        h1 {
+        header {
+            background: #111827;
+            padding: 15px;
+            text-align: center;
+            font-size: 22px;
             color: #4da6ff;
+        }
+
+        .container {
+            width: 80%;
+            margin: 30px auto;
+            text-align: center;
         }
 
         select, button {
             padding: 10px;
             margin: 10px;
-            background: #1a2238;
+            background: #1e293b;
             color: white;
             border: 1px solid #4da6ff;
-        }
-
-        .container {
-            width: 80%;
-            margin: auto;
         }
 
         canvas {
             background: #111827;
             border-radius: 10px;
+            padding: 10px;
         }
 
-        .learn {
-            margin-top: 40px;
-            text-align: left;
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 30px;
         }
 
         .card {
             background: #111827;
             padding: 15px;
-            margin: 10px 0;
             border-left: 4px solid #4da6ff;
+        }
+
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            text-align: center;
+            background: #111827;
         }
     </style>
 </head>
 
 <body>
 
-    <h1>Stock Market Analysis</h1>
+<header>Stock Market Insight</header>
+
+<div class="container">
 
     <form method="POST">
         <select name="stock">
@@ -63,62 +79,51 @@
         <button type="submit">Analyze</button>
     </form>
 
-    <div class="container">
-        <canvas id="chart"></canvas>
-    </div>
+    <canvas id="chart"></canvas>
 
-    <div class="learn container">
-        <h2>Learn Stock Market</h2>
-
+    <div class="cards">
         <div class="card">
-            <b>Stock</b>: A share in the ownership of a company.
+            <b>Stock</b><br>
+            Ownership in a company.
         </div>
 
         <div class="card">
-            <b>Index</b>: A group of stocks representing market performance (e.g., NIFTY 50).
+            <b>Index</b><br>
+            Represents market performance.
         </div>
 
         <div class="card">
-            <b>Bull Market</b>: Market is rising.
+            <b>Bull Market</b><br>
+            Prices are rising.
         </div>
 
         <div class="card">
-            <b>Bear Market</b>: Market is falling.
-        </div>
-
-        <div class="card">
-            <b>Volume</b>: Number of shares traded.
+            <b>Bear Market</b><br>
+            Prices are falling.
         </div>
     </div>
 
-    <script>
-        const labels = {{ dates | tojson }};
-        const data = {{ prices | tojson }};
+</div>
 
-        const ctx = document.getElementById('chart').getContext('2d');
+<footer>Indian Market Analysis Dashboard</footer>
 
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Price',
-                    data: data,
-                    borderColor: '#4da6ff',
-                    backgroundColor: 'rgba(77,166,255,0.2)',
-                    tension: 0.3
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    tooltip: {
-                        enabled: true
-                    }
-                }
-            }
-        });
-    </script>
+<script>
+    const labels = {{ dates | tojson }};
+    const data = {{ prices | tojson }};
+
+    new Chart(document.getElementById("chart"), {
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Price",
+                data: data,
+                borderColor: "#4da6ff",
+                tension: 0.3
+            }]
+        }
+    });
+</script>
 
 </body>
 </html>
