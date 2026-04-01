@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body style="text-align:center; font-family:sans-serif;">
+
+    <h1>Reliance Stock 📈</h1>
+
+    <canvas id="chart" width="800" height="400"></canvas>
+
+    <script>
+        const labels = {{ dates | tojson }};
+        const data = {{ prices | tojson }};
+
+        const ctx = document.getElementById('chart').getContext('2d');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Stock Price ₹',
+                    data: data,
+                    borderWidth: 2,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                interaction: {
+                    mode: 'index',
+                    intersect: false
+                },
+                plugins: {
+                    tooltip: {
+                        enabled: true
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Price (₹)'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
